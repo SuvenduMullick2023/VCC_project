@@ -1,0 +1,27 @@
+# Flask for API handling
+Flask==2.2.5
+
+# Google Cloud dependencies
+google-cloud-functions==1.13.1
+google-cloud-pubsub==2.18.4
+google-cloud-storage==2.10.0
+google-cloud-workflows==1.11.0
+google-cloud-logging==3.5.0
+google-cloud-secret-manager==2.16.0
+google-auth==2.22.0
+
+# Twilio for SMS service (optional)
+twilio==8.3.0
+
+# Email sending via SendGrid (optional)
+sendgrid==6.10.0
+
+# API request handling
+requests==2.28.1
+
+# YAML parsing for configuration files
+PyYAML==6.0
+
+# Linting and code quality checks
+flake8==6.1.0
+black==23.3.0

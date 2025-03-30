@@ -1,24 +1,52 @@
 🌟 Explanation of Components
 1️⃣ Infrastructure Management
-setup_gcp_resources.sh → Automates GCP resource creation.
+    setup_gcp_resources.sh → Automates GCP resource creation.
 
-api_gateway.yaml → Defines API Gateway routes.
+    api_gateway.yaml → Defines API Gateway routes.
 
-workflow.yaml → Defines Workflows for function orchestration.
+    workflow.yaml → Defines Workflows for function orchestration.
 
-cloudbuild.yaml → CI/CD pipeline.
+    cloudbuild.yaml → CI/CD pipeline.
 
 2️⃣ Microservices
-API Handler (api_handler/main.py) → Exposes an API endpoint.
+    API Handler (api_handler/main.py) → Exposes an API endpoint.
 
-SMS Service (sms_service/sms.py) → Sends SMS notifications via Twilio.
+    SMS Service (sms_service/sms.py) → Sends SMS notifications via Twilio.
 
-Email Service (email_service/email.py) → Sends emails via SendGrid.
+    Email Service (email_service/email.py) → Sends emails via SendGrid.
 
 3️⃣ Deployment & Testing
-deploy_functions.sh → Deploys Cloud Functions.
+    deploy_functions.sh → Deploys Cloud Functions.
 
-test_endpoints.sh → Tests API and services.
+    test_endpoints.sh → Tests API and services.
+
+
+
+
+pip install -r requirements.txt
+
+
+
+Deploy Cloud Functions with Required Packages
+Since GCP Cloud Functions automatically installs dependencies from requirements.txt, just deploy using:
+
+gcloud functions deploy apiHandler \
+    --runtime python39 \
+    --trigger-http \
+    --allow-unauthenticated \
+    --entry-point process_request \
+    --region us-central1
+
+
+
+🔑 Key Features
+✅ Flask → Handle HTTP API requests
+✅ Google Cloud SDKs → Integrate with Cloud Storage, Workflows, and Pub/Sub
+✅ Twilio → Send SMS notifications
+✅ SendGrid → Send emails
+✅ Linting Tools → Ensure code quality
+
+
 
 Workspace Directory Structure
 
