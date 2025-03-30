@@ -1,0 +1,17 @@
+main:
+  params: [input]
+  steps:
+    - invoke_sms:
+        call: http.post
+        args:
+          url: "https://REGION-PROJECT_ID.cloudfunctions.net/smsService"
+        result: sms_response
+    - invoke_email:
+        call: http.post
+        args:
+          url: "https://REGION-PROJECT_ID.cloudfunctions.net/emailService"
+        result: email_response
+    - return_output:
+        return:
+          sms: ${sms_response}
+          email: ${email_response}

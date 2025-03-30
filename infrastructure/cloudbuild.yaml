@@ -1,0 +1,77 @@
+steps:
+  # Step 1: Lint Python code
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        echo "Checking Python code quality..."
+        pip install flake8
+        flake8 services/
+
+  # Step 2: Deploy API Gateway
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: 
+      - 'api-gateway'
+      - 'api-configs'
+      - 'create'
+      - 'v2c-api-config'
+      - '--api=v2c-api'
+      - '--openapi-spec=infrastructure/api_gateway.yaml'
+      - '--project=$PROJECT_ID'
+
+  # Step 3: Deploy Cloud Functions
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: 
+      - 'functions'
+      - 'deploy'
+      - 'apiHandler'
+      - '--runtime'
+      - 'python39'
+      - '--trigger-http'
+      - '--allow-unauthenticated'
+      - '--entry-point'
+      - 'process_request'
+      - '--region'
+      - 'us-central1'
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: 
+      - 'functions'
+      - 'deploy'
+      - 'smsService'
+      - '--runtime'
+      - 'python39'
+      - '--trigger-http'
+      - '--allow-unauthenticated'
+      - '--entry-point'
+      - 'send_sms'
+      - '--region'
+      - 'us-central1'
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: 
+      - 'functions'
+      - 'deploy'
+      - 'emailService'
+      - '--runtime'
+      - 'python39'
+      - '--trigger-http'
+      - '--allow-unauthenticated'
+      - '--entry-point'
+      - 'send_email'
+      - '--region'
+      - 'us-central1'
+
+  # Step 4: Deploy Workflows
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: 
+      - 'workflows'
+      - 'deploy'
+      - 'v2c-workflow'
+      - '--source'
+      - 'infrastructure/workflow.yaml'
+      - '--region'
+      - 'us-central1'
+
+timeout: 1800s
